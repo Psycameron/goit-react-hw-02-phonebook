@@ -24,9 +24,17 @@ class App extends Component {
       number: data.number,
     };
 
-    const contactNames = this.state.contacts.map(contact => contact.name);
+    // if (this.state.contacts.filter(contact => contact.name === data.name)) {
+    //   console.log(this.state.contacts);
+    //   console.log(`🚀 ~ App ~ contact.name:`, contact.name);
+    //   console.log(`🚀 ~ App ~ data.name:`, data.name);
 
-    if (contactNames.includes(data.name)) {
+    //   return alert(`${data.name} is already contacts`);
+    // }
+
+    const contactNamesList = this.state.contacts.map(contact => contact.name);
+
+    if (contactNamesList.includes(data.name)) {
       return alert(`${data.name} is already contacts`);
     }
 
@@ -47,6 +55,12 @@ class App extends Component {
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
+  };
+
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
   };
 
   render() {
@@ -71,7 +85,10 @@ class App extends Component {
 
         <h2>Contacts</h2>
         <Filter value={filter} onChange={this.filterChange} />
-        <ContactList contacts={visibleContacts} />
+        <ContactList
+          contacts={visibleContacts}
+          onDeleteContact={this.deleteContact}
+        />
       </div>
     );
   }
