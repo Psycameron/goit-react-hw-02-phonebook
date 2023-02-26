@@ -24,6 +24,12 @@ class App extends Component {
       number: data.number,
     };
 
+    const contactNames = this.state.contacts.map(contact => contact.name);
+
+    if (contactNames.includes(data.name)) {
+      return alert(`${data.name} is already contacts`);
+    }
+
     this.setState(({ contacts }) => ({
       contacts: [...contacts, contact],
     }));
